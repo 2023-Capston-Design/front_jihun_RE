@@ -1,0 +1,17 @@
+version: '3.7'
+services: 
+  frontend:
+    build:
+      context: ./capstone_design_web/
+      dockerfile: Dockerfile
+    ports:
+      - "9303:3000"
+    restart: 'unless-stopped'
+    command: npm start
+    container_name: dev_web
+    networks:
+      - external_network
+networks:
+  external_network:
+    name: dev-docker_api-network
+    external: true
