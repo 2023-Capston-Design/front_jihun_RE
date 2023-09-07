@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { PropTypes } from 'prop-types';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,7 +10,7 @@ export default function InputMemberRole({onMemberRoleChange}) {
 
     useEffect(()=>{
         onMemberRoleChange(memberRole);
-    });
+    },[memberRole, onMemberRoleChange]);
 
     return(
         <FormControl fullWidth>
@@ -28,3 +29,7 @@ export default function InputMemberRole({onMemberRoleChange}) {
         </FormControl>
     )
 }
+
+InputMemberRole.propTypes = {
+  onMemberRoleChange: PropTypes.func.isRequired,
+};

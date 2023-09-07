@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import { IconButton, InputAdornment, TextField, } from '@mui/material';
 import Iconify from '../../../components/iconify';
 
@@ -22,6 +23,7 @@ export default function InputPassword({ onPasswordChange }) {
         } else {
             setHasError(true);
         }
+        
 
     };
 
@@ -35,7 +37,7 @@ export default function InputPassword({ onPasswordChange }) {
                 type={showPassword ? 'text' : 'password'}
                 onBlur={(event) => setPassword(event.target.value)}
                 error={hasError}
-                onChange={passwordChecking}
+                onChange={(event) => passwordChecking(event)}
                 helperText={hasError ? '비밀번호가 일치하지 않습니다.' : ''}
 
                 InputProps={{
@@ -56,7 +58,7 @@ export default function InputPassword({ onPasswordChange }) {
                 type={showPasswordChk ? 'text' : 'password'}
                 onBlur={(event) => setPasswordChk(event.target.value)}
                 error={hasError}
-                onChange={passwordChecking}
+                onChange={(event) => passwordChecking(event)}
                 helperText={hasError ? '비밀번호가 일치하지 않습니다.' : ''}
 
                 InputProps={{
@@ -72,3 +74,8 @@ export default function InputPassword({ onPasswordChange }) {
         </>
     )
 }
+
+InputPassword.propTypes = {
+    onPasswordChange: PropTypes.func.isRequired,
+  };
+  

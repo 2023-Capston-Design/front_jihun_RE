@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography } from '@mui/material';// Divider, Stack, Button 안써서 제외
+import { Container, Typography } from '@mui/material';// Divider, Stack, Button 안써서 제외
 // hooks
 // import useResponsive from '../hooks/useResponsive'; 로그인 페이지 로고
 // components

@@ -13,7 +13,7 @@ import InputEmail from './InputEmail';
 import InputGroupId from './InputGroupId';
 import InputPassword from './InputPassword';
 // config
-import {API} from './../../../config';
+import {API} from '../../../config';
 
 // ----------------------------------------------------------------------
 

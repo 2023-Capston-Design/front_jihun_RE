@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { PropTypes } from 'prop-types';
 import { TextField } from '@mui/material';
 
 export default function InputName({onNameChange}) {
@@ -6,7 +7,7 @@ export default function InputName({onNameChange}) {
 
     useEffect(() => {
         onNameChange(name);
-    })
+    }, [name, onNameChange])
 
 
     return(
@@ -18,3 +19,8 @@ export default function InputName({onNameChange}) {
         />
     )
 }
+
+InputName.propTypes = {
+    onNameChange: PropTypes.func.isRequired,
+  };
+  

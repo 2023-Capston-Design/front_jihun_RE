@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { PropTypes } from 'prop-types';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -17,7 +18,7 @@ export default function InputBirth({onDateChange}) {
 
       useEffect(() => {
         onDateChange(birth);
-      })
+      }, [birth, onDateChange]);
 
     return(
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -30,4 +31,8 @@ export default function InputBirth({onDateChange}) {
             />
         </LocalizationProvider>
     );
+};
+
+InputBirth.propTypes = {
+  onDateChange: PropTypes.func.isRequired,
 };

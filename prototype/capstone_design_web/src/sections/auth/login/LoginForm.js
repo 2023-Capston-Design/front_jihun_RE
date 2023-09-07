@@ -7,7 +7,7 @@ import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
 // config
-import {API} from './../../../config';
+import {API} from '../../../config';
 
 // ----------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { PropTypes } from 'prop-types';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,7 +10,7 @@ export default function InputSex({onSexChange}) {
 
     useEffect(()=>{
         onSexChange(sex);
-    });
+    }, [sex, onSexChange]);
 
     return(
         <FormControl fullWidth>
@@ -27,3 +28,7 @@ export default function InputSex({onSexChange}) {
         </FormControl>
     )
 }
+
+InputSex.propTypes = {
+  onSexChange: PropTypes.func.isRequired,
+};
