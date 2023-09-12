@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { IconButton, InputAdornment, TextField, } from '@mui/material';
-import Iconify from '../../../components/iconify';
+import Iconify from '../../../../components/iconify';
 
 export default function InputPassword({ onPasswordChange }) {
     const [password, setPassword] = useState('');

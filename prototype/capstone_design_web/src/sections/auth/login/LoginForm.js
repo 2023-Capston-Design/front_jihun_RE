@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox, Typography } from '@mui/material';
+import {  Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
 // config
 import {API} from '../../../config';
+import { setCookie } from '../cookie/cookie';
 
 // ----------------------------------------------------------------------
 
@@ -25,12 +26,23 @@ export default function LoginForm() {
     }).then((response)=>{
       console.log(`엑세스 토큰: ${response.data.accessToken}`)
       console.log(`리프레쉬 토큰: ${response.data.refreshToken}`)
+      setCookie("access_tk", response.data.accessToken);
+      setCookie("refresh_tk", response.data.refreshToken);
+
     }).catch((error)=>{
-      console.log(error)
+      console.log(error.response.data.message)
+      if (error.response.data.message === "MEMBER_NOT_FOUND") {
+        alert("회원정보가 존재하지 않습니다.")
+      } else if (error.response.data.message === "PASSWORD_UNMATCHED") {
+        alert("비밀번호가 일치하지 않습니다.")
+      } else {
+        alert("이메일과 비밀번호를 올바르게 입력해주세요.")
+      };
     })
     // 여기에 로그인 관련 코드 입력
     // navigate('/dashboard', { replace: true });
   };
+
   const handleClickJoinin = () => {
     // 여기에 회원가입 관련 코드 입력
     navigate('/signUp', { replace: true });
@@ -40,8 +52,9 @@ export default function LoginForm() {
     <>
       <Stack spacing={3}>
         <TextField 
-        name="loginId" 
-        label="아이디" 
+        name="loginEmail" 
+        label="이메일" 
+        type='email'
         onChange={(e)=>setEmail(e.target.value)}
         />
 
@@ -62,16 +75,7 @@ export default function LoginForm() {
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <Checkbox name="remember" label="Remember me" />
-         <Typography variant="body2" sx={{ ml:"-175px" }}>
-          로그인 정보 기억하기.
-          </Typography>
-
-         <Link variant="subtitle2" underline="hover" href='/forgotLogin'> {/* 아직 기능 구현하지 않으므로 비활성화 */}
-          아이디/비밀번호 찾기
-        </Link>
-      </Stack>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}/>
 
       <LoadingButton sx={{ 
         backgroundColor: 'rgba(255, 86, 48, 0.7)',

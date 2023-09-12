@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import { TextField } from '@mui/material';
-import {API} from '../../../config'
+import {API} from '../../../../config'
 
 export default function InputEmail({onEmailChange}) {
     const [email, setEmail] = useState('');

@@ -7,4 +7,5 @@ export const API = {
     LOGIN: `${BASE_URL}/v1/auth/login`,
     EMAILCHK: `${BASE_URL}/v1/member/check/email`,
     GIDCHK: `${BASE_URL}/v1/member/check/gid`,
+    DIDREAD: `${BASE_URL}/v1/department/id`,
 };
