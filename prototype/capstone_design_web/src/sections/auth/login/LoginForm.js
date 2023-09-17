@@ -28,6 +28,7 @@ export default function LoginForm() {
       console.log(`리프레쉬 토큰: ${response.data.refreshToken}`)
       setCookie("access_tk", response.data.accessToken);
       setCookie("refresh_tk", response.data.refreshToken);
+      navigate('/dashboard', { replace: true });
 
     }).catch((error)=>{
       console.log(error.response.data.message)

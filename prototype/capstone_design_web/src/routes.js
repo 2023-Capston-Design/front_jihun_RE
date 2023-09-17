@@ -12,6 +12,8 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotLoginPage from './pages/ForgotLoginPage';
+import MyPage from './pages/MyPage'
+import DepartmentPage from './pages/DepartmentPage'
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -25,6 +27,8 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'mypage', element: <MyPage />},
+        { path: 'department', element: <DepartmentPage />},
       ],
     },
     {
