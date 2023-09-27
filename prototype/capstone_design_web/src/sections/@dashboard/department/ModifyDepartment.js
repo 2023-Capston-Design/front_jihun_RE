@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-import { TextField, Box, Button, Typography, Modal, Stack } from '@mui/material';
+import { TextField, Box, /* Button, */ Typography, Modal, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
+/* import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles'; */
 
 import { API } from '../../../config';
-import { getCookie, setCookie } from '../../auth/cookie/cookie';
+import { getCookie } from '../../auth/cookie/cookie';
 
 const style = {
     position: 'absolute',
@@ -22,7 +22,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
+/* 
 const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -33,7 +33,7 @@ const VisuallyHiddenInput = styled('input')`
   left: 0;
   white-space: nowrap;
   width: 1px;
-`;
+`; */
 
 export default function ModifyDepartment({id, onClose}) {
     const [open, setOpen] = useState(false);
@@ -46,7 +46,7 @@ export default function ModifyDepartment({id, onClose}) {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [url, setUrl] = useState('');
-    const [profile, setProfile] = useState('');
+ /*    const [profile, setProfile] = useState('');
 
     const handleFileSelect = (e) => {
         const fileSelected = e.target.files[0];
@@ -54,7 +54,7 @@ export default function ModifyDepartment({id, onClose}) {
         if (fileSelected) {
             setProfile(fileSelected);
         }
-    }
+    } */
 
     /* const refresh = () => {
         const reTkn = getCookie("refresh_tk");
@@ -73,19 +73,18 @@ export default function ModifyDepartment({id, onClose}) {
     const handleModify = () => {
         const tkn = getCookie("access_tk");
 
-        const formData = new FormData();
+        /* const formData = new FormData();     //formData 제작
         formData.append("id", id)
         formData.append("name", name);
         formData.append("phoneNumber", phoneNumber);
         formData.append("url", url);
-        formData.append("profile", profile);
+        formData.append("profile", profile); */
 
         axios.patch(`${API.DEPARTMENT}`, {
             "id": id,
             "name": name,
             "phoneNumber" : phoneNumber,
-            "url": url,
-            "profile":profile
+            "url": url
         }, {
             headers: {
                 'Authorization': `Bearer ${tkn}`
@@ -97,10 +96,11 @@ export default function ModifyDepartment({id, onClose}) {
             console.log(error);
             if (error.response.data.message === 'Unathorized'){
                 /* refresh(); */
+                alert("토큰 갱신 필요");
             };
         });
 
-        /* axios.patch(`${API.DEPARTMENT}`, formData, {
+        /* axios.patch(`${API.DEPARTMENT}`, formData, {     // formData 통신
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${tkn}`
@@ -155,7 +155,7 @@ export default function ModifyDepartment({id, onClose}) {
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                         />
-                        <Button
+                       {/*  <Button
                             component="label"
                             variant="contained"
                             startIcon={<CloudUploadIcon />}
@@ -163,7 +163,7 @@ export default function ModifyDepartment({id, onClose}) {
                         >
                             부서 프로필 이미지 업로드
                             <VisuallyHiddenInput type="file" onChange={handleFileSelect} />
-                        </Button>
+                        </Button> */}
 
                         <LoadingButton sx={{
                             backgroundColor: 'rgba(255, 86, 48, 0.7)',
@@ -182,6 +182,6 @@ export default function ModifyDepartment({id, onClose}) {
 }
 
 ModifyDepartment.propTypes = {
-    
+    onClose : PropTypes.func.isRequired,
     id: PropTypes.number.isRequired, // id prop의 타입을 number로 지정하고 필수 필드로 설정
   };

@@ -77,8 +77,8 @@ export default function Nav({ openNav, onCloseNav }) {
 
       <Typography variant="subtitle2" sx={{ ml: 1 }}>사용자 관리</Typography>
       <NavSection data={navConfig[0]} />
-      <Typography variant="subtitle2" sx={{ ml: 1 }}>개인정보처리방침</Typography>
-      <NavSection data={navConfig[1]} />
+{/*       <Typography variant="subtitle2" sx={{ ml: 1 }}>개인정보처리방침</Typography>
+      <NavSection data={navConfig[1]} /> */}
       <Box sx={{ flexGrow: 1 }} />
       {/* <Box sx={{ px: 2.5, pb: 3, mt: 10 }}> 네비게이션 바 광고
         <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>

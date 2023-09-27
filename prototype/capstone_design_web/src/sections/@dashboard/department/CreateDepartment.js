@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { PropTypes } from 'prop-types';
 
 import { TextField, Box, Button, Typography, Modal, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
+/* import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles'; */
 
 import { API } from '../../../config';
 import Iconify from '../../../components/iconify';
@@ -23,7 +24,7 @@ const style = {
     p: 4,
 };
 
-const VisuallyHiddenInput = styled('input')`
+/* const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
@@ -33,7 +34,7 @@ const VisuallyHiddenInput = styled('input')`
   left: 0;
   white-space: nowrap;
   width: 1px;
-`;
+`; */
 
 export default function CreateDepartment({onCreateDepartment}) {
     const [open, setOpen] = useState(false);
@@ -43,7 +44,7 @@ export default function CreateDepartment({onCreateDepartment}) {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [url, setUrl] = useState('');
-    const [profile, setProfile] = useState('');
+/*     const [profile, setProfile] = useState('');      // 파일 업로드 관련 코드
 
     const handleFileSelect = (e) => {
         const fileSelected = e.target.files[0];
@@ -51,18 +52,22 @@ export default function CreateDepartment({onCreateDepartment}) {
         if (fileSelected) {
             setProfile(fileSelected);
         }
-    }
+    } */
 
     const handelCreate = () => {
         const tkn = getCookie("access_tk");
         
-        const formData = new FormData();
+        /* const formData = new FormData();
         formData.append("name", name);
         formData.append("phoneNumber", phoneNumber);
         formData.append("url", url);
-        formData.append("profile", profile);
+        formData.append("profile", profile); */
 
-        axios.post(`${API.DEPARTMENT}`, formData, {
+        axios.post(`${API.DEPARTMENT}`, {
+            "name": name,
+            "phoneNumber": phoneNumber,
+            "url": url
+        }, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${tkn}`
@@ -111,7 +116,7 @@ export default function CreateDepartment({onCreateDepartment}) {
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                         />
-                        <Button
+                        {/* <Button
                             component="label"
                             variant="contained"
                             startIcon={<CloudUploadIcon />}
@@ -119,7 +124,7 @@ export default function CreateDepartment({onCreateDepartment}) {
                         >
                             부서 프로필 이미지 업로드
                             <VisuallyHiddenInput type="file" onChange={handleFileSelect} />
-                        </Button>
+                        </Button> */}
 
                         <LoadingButton sx={{
                             backgroundColor: 'rgba(255, 86, 48, 0.7)',
@@ -136,3 +141,7 @@ export default function CreateDepartment({onCreateDepartment}) {
         </>
     );
 }
+
+CreateDepartment.propTypes = {
+    onCreateDepartment: PropTypes.func.isRequired,
+};

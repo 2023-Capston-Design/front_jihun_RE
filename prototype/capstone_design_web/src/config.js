@@ -1,7 +1,7 @@
 const BASE_URL = 'http://localhost:3000';
 
 export const API = {
-    REGISTER: `${BASE_URL}/v1/member`, // 조회,회원가입,수정,삭제
+    MEMBER: `${BASE_URL}/v1/member`, // 조회,회원가입,수정,삭제
     EMAILAUTH: `${BASE_URL}/v1/auth/email`, // 이메일 인증 절차
     LOGIN: `${BASE_URL}/v1/auth/login`, // 로그인 
     EMAILCHK: `${BASE_URL}/v1/member/check/email`, // 이메일 중복확인

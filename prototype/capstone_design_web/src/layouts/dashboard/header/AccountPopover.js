@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode'
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
@@ -23,6 +24,42 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  /** 헤더 아이콘에 띄울 개인정보 조회 */
+  useEffect(() => {
+    const tkn = getCookie("access_tk");
+    console.log(tkn)
+    const decodedTkn = jwtDecode(tkn);
+    console.log(`디코드한 토큰 값: ${decodedTkn.user_id}`);
+
+    axios.get(`${API.MEMREADBYID}/${decodedTkn.user_id}`, {
+      headers: {
+        'Authorization': `Bearer ${tkn}`
+      }
+    }).then((response) => {
+      console.log(response.data)
+      setName(response.data.name);
+      setEmail(response.data.email);
+    }).catch((error) => {
+      console.log(error.response.data.message)
+      if (error.response.data.message === "Unauthorized") { // 토큰 만료시 실행
+        const reTkn = getCookie("refresh_tk");
+        axios.post(`${API.TKNREFRESH}`, {
+          headers: {
+            'Authorization': `Bearer ${reTkn}`
+          }
+        }).then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error)
+        });
+      }
+    });
+  }, []);
+
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
 
@@ -35,11 +72,11 @@ export default function AccountPopover() {
   };
 
   /** 현재 로그인 되어있는 회원정보 조회 */
-  
+
 
   /** 마이페이지로 연결 */
   const handleMypage = () => {
-    navigate('/dashboard/mypage', {replace: true});  
+    navigate('/dashboard/mypage', { replace: true });
     setOpen(null);
   }
 
@@ -52,9 +89,9 @@ export default function AccountPopover() {
       headers: {
         'Authorization': `Bearer ${ac}`
       }
-    }).then((response)=> {
+    }).then((response) => {
       console.log(response)
-    }).catch((error)=> {
+    }).catch((error) => {
       console.log(error)
     });
 
@@ -64,7 +101,7 @@ export default function AccountPopover() {
     const rc1 = getCookie("refresh_tk");
     console.log(`삭제후: ${ac1} & ${rc1}`)
 
-    navigate('/login', {replace: true});  
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -110,10 +147,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {email}
           </Typography>
         </Box>
 

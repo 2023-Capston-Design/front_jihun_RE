@@ -8,13 +8,13 @@ import FormControl from '@mui/material/FormControl';
 
 // component
 import InputDepartmentId from './InputDepartmentId';
-import InputProfile from './InputProfile';
+/* import InputProfile from './InputProfile'; */
 
 
 export default function InputMemberRole({ onMemberRoleChange }) {
   const [memberRole, setMemberRole] = useState('');
   const [departmentId, setDepartmentId] = useState('');
-  const [profile, setProfile] = useState('');
+  /* const [profile, setProfile] = useState(''); */
   const [additionalForm, setAdditionalForm] = useState(false);
 
   const handleMemberRole = (e) => {
@@ -30,8 +30,8 @@ export default function InputMemberRole({ onMemberRoleChange }) {
   }
 
   useEffect(() => {
-    onMemberRoleChange(memberRole, departmentId, profile);
-  }, [memberRole, departmentId, profile, onMemberRoleChange]);
+    onMemberRoleChange(memberRole, departmentId/* , profile */);
+  }, [memberRole, departmentId, /* profile, */ onMemberRoleChange]);
 
   return (
 
@@ -56,9 +56,9 @@ export default function InputMemberRole({ onMemberRoleChange }) {
             <InputDepartmentId
               onDepartmentIdChange={(departmentId) => setDepartmentId(departmentId)}
             />
-            <InputProfile
+            {/* <InputProfile
               onProfileChange={(profile) => setProfile(profile)}
-            />
+            /> */}
           </>
         )}
       </Stack>

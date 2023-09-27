@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { PropTypes } from 'prop-types';
-import { TextField } from '@mui/material';
+import { Stack,/* TextField */ } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import axios from "axios";
-import {API} from '../../../../config'
+import { API } from '../../../../config'
 
-export default function InputDepartmentId({onDepartmentIdChange}) {
+export default function InputDepartmentId({ onDepartmentIdChange }) {
     const [departmentId, setDepartmentId] = useState('');
-    const [hasError, setHasError] = useState(false);
+    const [departments, setDepartments] = useState([]);
 
-    const departmentIdChk = async (event) => {
+    /* const departmentIdChk = async (event) => {       // 부서선택을 select로 구현함에 따라 중복확인 절차가 의미 없어짐.
         const chkDepartmentId = event.target.value;
         await axios.get(`${API.DIDREAD}/${chkDepartmentId}`, 
         {
@@ -23,27 +27,45 @@ export default function InputDepartmentId({onDepartmentIdChange}) {
             }
         });
     }
-
-
-
+ */
+    /** select에 담을 부서 정보를 끌어오기 위함  */
     useEffect(() => {
+        axios.get(`${API.DEPARTMENT}`, {
+            params: {
+                "page": 1,
+                "pagesize": 100
+            }
+        }).then((response) => {
+            console.log(response)
+            setDepartments(response.data);
+        }).catch((error) => {
+            console.log(error)
+        });
         onDepartmentIdChange(departmentId);
     }, [departmentId, onDepartmentIdChange])
 
-
-    return(
-        <TextField
-          required
-          name="departmentId"
-          label="학과(부서) 번호"
-          error = {hasError}
-          helperText = {hasError ? "부서가 존재하지 않습니다." : ""}
-          onBlur={departmentIdChk}
-        />
+    return (
+        <FormControl>
+            <InputLabel id="select_department">학과(부서)</InputLabel>
+            <Stack spacing={2}>
+                <Select
+                    labelId="select_department"
+                    id="department"
+                    value={departmentId}
+                    label="학과(부서)"
+                    onChange={(e) => setDepartmentId(e.target.value)}>
+                    {departments.map((department) => (
+                        <MenuItem
+                            key={department.id}
+                            value={department.id}
+                        >{department.name}</MenuItem>
+                    ))}
+                </Select>
+            </Stack>
+        </FormControl>
     )
 }
 
 InputDepartmentId.propTypes = {
     onDepartmentIdChange: PropTypes.func.isRequired,
-  };
-  
+};

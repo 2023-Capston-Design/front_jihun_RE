@@ -28,7 +28,6 @@ export default function SignUpForm() {
   const [birth, setBirth] = useState('');
   const [memberRole, setMemberRole] = useState('');
   const [departmentId, setDepartmentId] = useState('');
-  const [profile, setProfile] = useState('');
 
   const handleName = (newName) => {
     setName(newName);
@@ -48,16 +47,15 @@ export default function SignUpForm() {
   const handleDate = (newDate) => {
     setBirth(newDate);
   }
-  const handleMemberRole = (newMemberRole, newDepartmentId, newProfile) => {
+  const handleMemberRole = (newMemberRole, newDepartmentId) => {
     setMemberRole(newMemberRole);
     setDepartmentId(newDepartmentId);
-    setProfile(newProfile);
   }
 
 
   const handleSignup = () => {  // 회원가입 로직 실행
     let id='';
-    const formData = new FormData(); // FromData 로직으로 텍스트+파일 전송을 한번에 처리
+    /* const formData = new FormData(); // FromData 로직으로 텍스트+파일 전송을 한번에 처리
 
     formData.append('name', name);
     formData.append('password', password);
@@ -67,12 +65,17 @@ export default function SignUpForm() {
     formData.append('birth', birth);
     formData.append('memberRole', memberRole);
     formData.append('departmentId', departmentId);
-    formData.append('profile', profile);
+    formData.append('profile', profile); */
 
-    axios.post(`${API.REGISTER}`, formData,{
-      headers: {
-        'Content-Type' : 'multipart/form-data'
-      }
+    axios.post(`${API.MEMBER}`, {
+      "name": name,
+      "password": password,
+      "email": email,
+      "groupId": groupId,
+      "sex": sex,
+      "birth": birth,
+      "memberRole": memberRole,
+      "departmentId": departmentId
     }).then((response) => {
       console.log(response.data.id);
       id = response.data.id;

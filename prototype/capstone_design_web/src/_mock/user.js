@@ -3,25 +3,35 @@ import { sample } from 'lodash';
 
 // ----------------------------------------------------------------------
 
-const users = [...Array(24)].map((_, index) => ({
+const users = [...Array(15)].map((_, index) => ({
   id: faker.datatype.uuid(),
-  avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
-  name: faker.name.fullName(),
-  company: faker.company.name(),
-  isVerified: faker.datatype.boolean(),
-  status: sample(['active', 'banned']),
-  role: sample([
-    'Leader',
-    'Hr Manager',
-    'UI Designer',
-    'UX Designer',
-    'UI/UX Designer',
-    'Project Manager',
-    'Backend Developer',
-    'Full Stack Designer',
-    'Front End Developer',
-    'Full Stack Developer',
+  name: sample([
+    "강지훈",
+    "이정현",
+    "윤준호",
   ]),
+  email: sample([
+    "lasksla@gmail.com",
+    "LEE@gmail.com",
+    "hoplin@gmail.com",
+  ]),
+  groupId: sample([
+    "B889005",
+    "B889065",
+    "B889064",
+  ]),
+  memberRole: sample([
+    "Instructor",
+    "student",
+  ]),
+  approvedReason: sample([
+    "approved as Instructor",
+    "new member",
+  ]),
+  approved: sample([
+    "approve",
+    "pending",
+  ])
 }));
 
 export default users;

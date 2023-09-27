@@ -46,7 +46,7 @@ export default function LoginForm() {
 
   const handleClickJoinin = () => {
     // 여기에 회원가입 관련 코드 입력
-    navigate('/signUp', { replace: true });
+    navigate('/signUp');
   };
 
   return (
