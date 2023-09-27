@@ -114,7 +114,6 @@ export default function MyinfoModify() {
             "birth": birth
         }, {
             headers: {
-                'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${tkn}`
             }
         }).then((response) => {
