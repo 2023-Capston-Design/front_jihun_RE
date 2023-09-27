@@ -69,7 +69,6 @@ export default function CreateDepartment({onCreateDepartment}) {
             "url": url
         }, {
             headers: {
-                'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${tkn}`
             }
         }).then((response) => {
