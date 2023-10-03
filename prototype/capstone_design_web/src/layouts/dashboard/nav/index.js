@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';// Button, Stack 사용 안해서 지워둠
@@ -14,7 +16,8 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
-
+import { getCookie } from '../../../sections/auth/cookie/cookie';
+import { API } from '../../../config';
 // ----------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
@@ -38,6 +41,39 @@ export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
+
+  const [manager, setManager] = useState(false);
+  const [student, setStudent] = useState(false);
+  const [instructor, setInstructor] = useState(false);
+
+  useEffect(() => {
+    const tk = getCookie("access_tk");
+    const decodedTkn = jwtDecode(tk);
+
+    axios.get(`${API.MEMREADBYID}/${decodedTkn.user_id}`, {
+      headers: {
+        "Authorization": `Bearer ${tk}`
+      }
+    }).then((response) => {
+      const memberRole = response.data.memberRole;
+      if (memberRole === "manager") {
+        setManager(true);
+        setInstructor(false);
+        setStudent(false);
+      }
+      else if (memberRole === "instructor" || memberRole === "manager") {
+        setManager(false);
+        setInstructor(true);
+        setStudent(false);
+      } else {
+        setManager(false);
+        setInstructor(false);
+        setStudent(true);
+      };
+    }).catch((error) => {
+      console.log(error)
+    });
+  }, []);
 
   useEffect(() => {
     if (openNav) {
@@ -76,8 +112,22 @@ export default function Nav({ openNav, onCloseNav }) {
       </Box> */}
 
       <Typography variant="subtitle2" sx={{ ml: 1 }}>사용자 관리</Typography>
-      <NavSection data={navConfig[0]} />
-{/*       <Typography variant="subtitle2" sx={{ ml: 1 }}>개인정보처리방침</Typography>
+      {manager && (
+        <>
+        <NavSection data={navConfig[0]} />
+        </>
+      )}
+      {instructor && (
+        <>
+        <NavSection data={navConfig[1]} />
+        </>
+      )}
+      {student && (
+        <>
+        <NavSection data={navConfig[2]} />
+        </>
+      )}
+      {/*       <Typography variant="subtitle2" sx={{ ml: 1 }}>개인정보처리방침</Typography>
       <NavSection data={navConfig[1]} /> */}
       <Box sx={{ flexGrow: 1 }} />
       {/* <Box sx={{ px: 2.5, pb: 3, mt: 10 }}> 네비게이션 바 광고

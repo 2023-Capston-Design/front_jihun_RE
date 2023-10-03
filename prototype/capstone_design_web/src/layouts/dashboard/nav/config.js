@@ -17,15 +17,45 @@ const navConfig = [[
     icon: icon('ic_cart'),
   },
   {
-    title: '수업 관리',
-    path: '/dashboard/app',
+    title: '이미지 관리',
+    path: '/dashboard/classImage',
     icon: icon('ic_user'),
   },
   {
-    title: '수업 검색',
-    path: '/dashboard/blog',
-    icon: icon('ic_blog'),
-  }],
+    title: '수업 관리',
+    path: '/dashboard/classManage',
+    icon: icon('ic_user'),
+  },
+  {
+    title: '클래스 룸',
+    path: '/dashboard/classRoom',
+    icon: icon('ic_user'),
+  },
+],
+[
+  {
+    title: '수업 관리',
+    path: '/dashboard/classManage',
+    icon: icon('ic_user')
+  },
+  {
+    title: '강의용 이미지 관리',
+    path: '/dashboard/classImage',
+    icon: icon('ic_user')
+  }
+],
+[
+  {
+    title: '클래스룸',
+    path: '/dashboard/classRoom',
+    icon: icon('ic_user')
+  },
+  {
+    title: '수강 신청',
+    path: '/dashboard/classManage',
+    icon: icon('ic_user')
+  }
+]
 ];
 
 export default navConfig;

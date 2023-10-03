@@ -11,6 +11,9 @@ import SignUpPage from './pages/SignUpPage';
 import ForgotLoginPage from './pages/ForgotLoginPage';
 import MyPage from './pages/MyPage'
 import DepartmentPage from './pages/DepartmentPage'
+import ClassImagePage from './pages/ClassImagePage';
+import ClassManagePage from './pages/ClassManagePage';
+import ClassroomPage from './pages/ClassroomPage';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -23,6 +26,9 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'mypage', element: <MyPage />},
         { path: 'department', element: <DepartmentPage />},
+        { path: 'classImage', element: <ClassImagePage />},
+        { path: 'classManage', element: <ClassManagePage/>},
+        { path: 'classRoom', element: <ClassroomPage/>},
       ],
     },
     {

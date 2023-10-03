@@ -31,16 +31,12 @@ export default function AccountPopover() {
   /** 헤더 아이콘에 띄울 개인정보 조회 */
   useEffect(() => {
     const tkn = getCookie("access_tk");
-    console.log(tkn)
     const decodedTkn = jwtDecode(tkn);
-    console.log(`디코드한 토큰 값: ${decodedTkn.user_id}`);
-
     axios.get(`${API.MEMREADBYID}/${decodedTkn.user_id}`, {
       headers: {
         'Authorization': `Bearer ${tkn}`
       }
     }).then((response) => {
-      console.log(response.data)
       setName(response.data.name);
       setEmail(response.data.email);
     }).catch((error) => {

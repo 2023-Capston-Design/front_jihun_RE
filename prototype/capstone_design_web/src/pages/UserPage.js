@@ -1,8 +1,9 @@
+import { Helmet } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { TextField, Stack } from '@mui/material';
+import { Container, TextField, Stack } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -175,26 +176,38 @@ export default function CollapsibleTable() {
   }, []);
 
   return (
-    <Scrollbar>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>이름</TableCell>
-              <TableCell >이메일</TableCell>
-              <TableCell >학번(교번)</TableCell>
-              <TableCell >직책</TableCell>
-              <TableCell >인증 상태</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {userArray.map((row) => (
-              <Row key={row.id} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Scrollbar>
+    <>
+      <Helmet>
+        <title>유저 관리 페이지</title>
+      </Helmet>
+      <Container>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1}>
+          <Typography variant='h4' sx={{ mb: 1 }}>
+            유저 관리
+          </Typography>
+        </Stack>
+        <Scrollbar>
+          <TableContainer component={Paper}>
+            <Table aria-label="collapsible table">
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell>이름</TableCell>
+                  <TableCell >이메일</TableCell>
+                  <TableCell >학번(교번)</TableCell>
+                  <TableCell >직책</TableCell>
+                  <TableCell >인증 상태</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {userArray.map((row) => (
+                  <Row key={row.id} row={row} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Scrollbar>
+      </Container>
+    </>
   );
 }

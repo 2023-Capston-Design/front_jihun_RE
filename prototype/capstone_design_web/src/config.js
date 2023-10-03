@@ -11,5 +11,12 @@ export const API = {
     MEMREADBYID: `${BASE_URL}/v1/member/id`, // 아이디로 멤버 조회
     TKNREFRESH: `${BASE_URL}/v1/auth/refresh`, // 토큰 리프레쉬
     LOGOUT: `${BASE_URL}/v1/auth/logout`, // 로그아웃
+    CLASSIMAGE: `${BASE_URL}/v1/class-image`, // 클래스 이미지 생성,조회,삭제
+    CLASS: `${BASE_URL}/v1/class`, // 수업 생성,조회,수정,삭제
+    CLASSINSTRUCTOR: `${BASE_URL}/v1/class/instructor`, // 교수 수업조회
+    CLASSDEPARTMENT: `${BASE_URL}/v1/class/department`, // 학과 수업조회
+    CLASSSTUDENT: `${BASE_URL}/v1/class/available`, // 학생 클래스룸 수업 조회
+    CLASSENROLL: `${BASE_URL}/v1/class/enroll`, // 학생 수강신청
+    CLASSOUT: `${BASE_URL}/v1/class/withdraw`, // 학생 수업 탈퇴
 
 };
