@@ -15,8 +15,10 @@ export const API = {
     CLASS: `${BASE_URL}/v1/class`, // 수업 생성,조회,수정,삭제
     CLASSINSTRUCTOR: `${BASE_URL}/v1/class/instructor`, // 교수 수업조회
     CLASSDEPARTMENT: `${BASE_URL}/v1/class/department`, // 학과 수업조회
-    CLASSSTUDENT: `${BASE_URL}/v1/class/available`, // 학생 클래스룸 수업 조회
+    CLASSSTUDENT: `${BASE_URL}/v1/class/available`, // 학생의 등록 가능한 수업 조회
     CLASSENROLL: `${BASE_URL}/v1/class/enroll`, // 학생 수강신청
     CLASSOUT: `${BASE_URL}/v1/class/withdraw`, // 학생 수업 탈퇴
+    CLASSROOM: `${BASE_URL}/v1/class/student`, // 학생 클래스룸 수업 조회
+    CLASSBYID: `${BASE_URL}/v1/class/id`, // id로 수업 정보 조회
 
 };

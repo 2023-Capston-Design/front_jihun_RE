@@ -22,7 +22,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/user" />, index: true },
+        { element: <Navigate to="/dashboard/classManage" />, index: true },
         { path: 'user', element: <UserPage /> },
         { path: 'mypage', element: <MyPage />},
         { path: 'department', element: <DepartmentPage />},

@@ -25,12 +25,7 @@ const navConfig = [[
     title: '수업 관리',
     path: '/dashboard/classManage',
     icon: icon('ic_user'),
-  },
-  {
-    title: '클래스 룸',
-    path: '/dashboard/classRoom',
-    icon: icon('ic_user'),
-  },
+  }
 ],
 [
   {
@@ -46,13 +41,13 @@ const navConfig = [[
 ],
 [
   {
-    title: '클래스룸',
-    path: '/dashboard/classRoom',
+    title: '수강 신청',
+    path: '/dashboard/classManage',
     icon: icon('ic_user')
   },
   {
-    title: '수강 신청',
-    path: '/dashboard/classManage',
+    title: '클래스룸',
+    path: '/dashboard/classRoom',
     icon: icon('ic_user')
   }
 ]

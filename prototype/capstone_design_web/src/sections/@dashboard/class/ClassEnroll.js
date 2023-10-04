@@ -27,20 +27,39 @@ function Row(props) {
     const [open, setOpen] = useState(false);
     const [tk, setTk] = useState('');
     const [studentId, setStudentId] = useState('');
+    /* const [instructor, setInstructor] = useState(''); */
+    const [department, setDepartment] = useState('');
 
     useEffect(() => {
         const tempTk = getCookie("access_tk");
         setTk(tempTk);
         const decodedTkn = jwtDecode(tempTk);
         setStudentId(decodedTkn.user_id);
-    }, []);
+
+       /*  axios.get(`${API.MEMREADBYID}/${row.instructor.id}`, {
+            headers: {
+                "Authorization": `Bearer ${tempTk}`
+            }
+        }).then((response) => {
+            setInstructor(response.data.name);
+        }).catch((error) => {
+            console.log(error)
+        }); */
+
+        axios.get(`${API.DIDREAD}/${row.departmentId}`)
+            .then((response) => {
+                setDepartment(response.data.name);
+            }).catch((error) => {
+                console.log(error)
+            });
+
+    }, [/* row.instructor.id, */ row.departmentId]);
 
     const handleEnroll = () => {
         axios.post(`${API.CLASSENROLL}`, {
-            
-                "studentId": studentId,
-                "classId": row.id,
-            
+
+            "studentId": studentId,
+            "classId": row.id,
         }, {
             headers: {
                 "Authorization": `Bearer ${tk}`
@@ -49,6 +68,7 @@ function Row(props) {
             console.log(response.data.msg)
             if (response.data.msg === true) {
                 alert("수강 등록이 완료되었습니다.");
+                window.location.reload();
             }
         }).catch((error) => {
             console.log(error)
@@ -72,6 +92,8 @@ function Row(props) {
                     {row.name}
                 </TableCell>
                 <TableCell >{row.maximum_student}</TableCell>
+                <TableCell >{department}</TableCell>
+                {/* <TableCell >{instructor}</TableCell> */}
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -102,6 +124,10 @@ Row.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         maximum_student: PropTypes.number.isRequired,
+        departmentId: PropTypes.string.isRequired,
+        /* instructor: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+        }) */
     }).isRequired,
 };
 
@@ -113,7 +139,7 @@ export default function ClassEnroll() {
 
         const tkn = getCookie("access_tk");
         const decodedTkn = jwtDecode(tkn);
-        
+
         axios.get(`${API.CLASSSTUDENT}/${decodedTkn}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
@@ -136,6 +162,8 @@ export default function ClassEnroll() {
                             <TableCell />
                             <TableCell>강의 명</TableCell>
                             <TableCell >최대 인원</TableCell>
+                            <TableCell >학과(부서)</TableCell>
+                            {/* <TableCell >담당 교수</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>

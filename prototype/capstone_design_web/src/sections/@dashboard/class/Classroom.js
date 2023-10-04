@@ -28,19 +28,40 @@ function Row(props) {
     const [open, setOpen] = useState(false);
     const [tk, setTk] = useState('');
     const [id, setId] = useState('');
+    const [instructor, setInstructor] = useState('');
 
     useEffect(() => {
+
+
         const tempTk = getCookie("access_tk");
         setTk(tempTk);
         const decodedTkn = jwtDecode(tempTk);
         setId(decodedTkn.user_id);
-    }, []);
+
+        axios.get(`${API.CLASSBYID}/${row.classes.id}`, {
+            headers: {
+                "Authorization": `Bearer ${tempTk}`
+            }
+        }).then((response) => {
+            axios.get(`${API.MEMREADBYID}/${response.data.instructor.id}`, {
+                headers: {
+                    "Authorization": `Bearer ${tempTk}`
+                }
+            }).then((response) => {
+                setInstructor(response.data.name)
+            }).catch((error) => {
+                console.log(error)
+            });
+        }).catch((error) => {
+            console.log(error)
+        });
+    }, [row.classes.id]);
 
     const handleDrop = () => {
-        console.log(typeof (row.id))
+        console.log(typeof (row.classes.id))
         axios.delete(`${API.CLASSOUT}`, {
             data: {
-                "classId": row.id,
+                "classId": row.classes.id,
                 "studentId": id
             },
             headers: {
@@ -55,6 +76,7 @@ function Row(props) {
 
 
     return (
+
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell>
@@ -67,9 +89,10 @@ function Row(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.classes.name}
                 </TableCell>
-                <TableCell >{row.maximum_student}</TableCell>
+                <TableCell >{row.classes.maximum_student}</TableCell>
+                <TableCell >{instructor}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -91,6 +114,7 @@ function Row(props) {
                 </TableCell>
             </TableRow>
         </>
+
     );
 }
 
@@ -98,8 +122,11 @@ function Row(props) {
 Row.propTypes = {
     row: PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        maximum_student: PropTypes.number.isRequired,
+        classes: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            maximum_student: PropTypes.number.isRequired,
+        }),
     }).isRequired,
 };
 
@@ -110,10 +137,12 @@ export default function ClassMain() {
     useEffect(() => {
 
         const tkn = getCookie("access_tk");
-        const decodedTkn = jwtDecode(tkn);
 
-
-        axios.get(`${API.CLASSSTUDENT}/${decodedTkn}`, {
+        axios.get(`${API.CLASSROOM}`, {
+            params: {
+                "page": 1,
+                "pagesize": 100
+            },
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
@@ -135,11 +164,14 @@ export default function ClassMain() {
                             <TableCell />
                             <TableCell>강의 명</TableCell>
                             <TableCell >최대 인원</TableCell>
+                            <TableCell >담당 교수</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {userArray.map((row) => (
-                            <Row key={row.id} row={row} />
+                            row.classes ? (
+                                <Row key={row.id} row={row} />
+                            ) : null
                         ))}
                     </TableBody>
                 </Table>

@@ -17,7 +17,7 @@ export default function ClassroomPage() {
             <Container>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                     <Typography variant="h4" sx={{ mb: 5 }}>
-                        수강신청
+                        클래스룸
                     </Typography>
                 </Stack>
                 <Classroom />
