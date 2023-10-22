@@ -171,7 +171,10 @@ export default function ClassMain() {
                     </TableHead>
                     <TableBody>
                         {userArray.map((row) => (
-                            <Row key={row.id} row={row} />
+                            <Row key={row.id} row={{
+                                ...row,
+                                departmentId: parseInt(row.departmentId, 10)
+                            }} />
                         ))}
                     </TableBody>
                 </Table>

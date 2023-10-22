@@ -36,6 +36,10 @@ export default function LoginForm() {
         alert("회원정보가 존재하지 않습니다.")
       } else if (error.response.data.message === "PASSWORD_UNMATCHED") {
         alert("비밀번호가 일치하지 않습니다.")
+      } else if (error.response.data.message === "INVALID_MEMBER_APPROVAL") {
+        alert("관리자의 허가를 필요로 합니다.")
+      } else if (error.response.data.message === "EMAIL_YET_CONFIRMED") {
+        alert("이메일 인증이 완료되지 않았습니다.")
       } else {
         alert("이메일과 비밀번호를 올바르게 입력해주세요.")
       };

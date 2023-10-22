@@ -9,7 +9,6 @@ import { LoadingButton } from '@mui/lab';
 import { API } from '../../../config';
 import Iconify from '../../../components/iconify';
 import { getCookie } from '../../auth/cookie/cookie';
-import InputClassImage from './component/InputClassImage';
 
 const style = {
     position: 'absolute',
@@ -32,7 +31,6 @@ export default function CreateClass({onCreateClass}) {
     const [maximumStudent, setMaximumStudent] = useState('');
     const [tkn, setTkn] = useState('');
     const [ id, setId ] = useState('');
-    const [classImage, setClassImage]= useState('');
 
     useEffect(() => {
         const tk = getCookie("access_tk");
@@ -48,7 +46,6 @@ export default function CreateClass({onCreateClass}) {
             "name": name,
             "maximum_student": maximumStudent,
             "instructorId": id,
-            "classImageId": classImage,
         }, {
             headers: {
                 'Authorization': `Bearer ${tkn}`
@@ -60,10 +57,6 @@ export default function CreateClass({onCreateClass}) {
             console.log(error);
         });
     };
-
-    const handleImage = (classImage) => {
-        setClassImage(classImage);
-    }
 
     return (
         <>
@@ -94,7 +87,6 @@ export default function CreateClass({onCreateClass}) {
                             value={maximumStudent}
                             onChange={(e) => setMaximumStudent(parseInt(e.target.value, 10))}
                         />
-                        <InputClassImage onClassImageChange={handleImage} />
 
                         <LoadingButton sx={{
                             backgroundColor: 'rgba(255, 86, 48, 0.7)',

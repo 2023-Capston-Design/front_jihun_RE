@@ -27,7 +27,7 @@ function Row(props) {
     const [open, setOpen] = useState(false);
     const [tk, setTk] = useState('');
     const [studentId, setStudentId] = useState('');
-    /* const [instructor, setInstructor] = useState(''); */
+    const [instructor, setInstructor] = useState('');
     const [department, setDepartment] = useState('');
 
     useEffect(() => {
@@ -36,7 +36,7 @@ function Row(props) {
         const decodedTkn = jwtDecode(tempTk);
         setStudentId(decodedTkn.user_id);
 
-       /*  axios.get(`${API.MEMREADBYID}/${row.instructor.id}`, {
+        axios.get(`${API.MEMREADBYID}/${row.instructor.id}`, {
             headers: {
                 "Authorization": `Bearer ${tempTk}`
             }
@@ -44,7 +44,7 @@ function Row(props) {
             setInstructor(response.data.name);
         }).catch((error) => {
             console.log(error)
-        }); */
+        });
 
         axios.get(`${API.DIDREAD}/${row.departmentId}`)
             .then((response) => {
@@ -93,7 +93,7 @@ function Row(props) {
                 </TableCell>
                 <TableCell >{row.maximum_student}</TableCell>
                 <TableCell >{department}</TableCell>
-                {/* <TableCell >{instructor}</TableCell> */}
+                <TableCell >{instructor}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -125,9 +125,9 @@ Row.propTypes = {
         name: PropTypes.string.isRequired,
         maximum_student: PropTypes.number.isRequired,
         departmentId: PropTypes.string.isRequired,
-        /* instructor: PropTypes.shape({
+        instructor: PropTypes.shape({
             id: PropTypes.number.isRequired,
-        }) */
+        })
     }).isRequired,
 };
 
@@ -163,7 +163,7 @@ export default function ClassEnroll() {
                             <TableCell>강의 명</TableCell>
                             <TableCell >최대 인원</TableCell>
                             <TableCell >학과(부서)</TableCell>
-                            {/* <TableCell >담당 교수</TableCell> */}
+                            <TableCell >담당 교수</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

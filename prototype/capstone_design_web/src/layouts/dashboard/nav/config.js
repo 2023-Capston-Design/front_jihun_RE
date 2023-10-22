@@ -33,11 +33,11 @@ const navConfig = [[
     path: '/dashboard/classManage',
     icon: icon('ic_user')
   },
-  {
+  /* {
     title: '강의용 이미지 관리',
     path: '/dashboard/classImage',
     icon: icon('ic_user')
-  }
+  } */
 ],
 [
   {
