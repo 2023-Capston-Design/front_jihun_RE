@@ -36,7 +36,7 @@ function Row(props) {
         const decodedTkn = jwtDecode(tempTk);
         setStudentId(decodedTkn.user_id);
 
-        axios.get(`${API.MEMREADBYID}/${row.instructor.id}`, {
+        /* axios.get(`${API.MEMREADBYID}/${row.instructor.id}`, {
             headers: {
                 "Authorization": `Bearer ${tempTk}`
             }
@@ -44,7 +44,7 @@ function Row(props) {
             setInstructor(response.data.name);
         }).catch((error) => {
             console.log(error)
-        });
+        }); */
 
         axios.get(`${API.DIDREAD}/${row.departmentId}`)
             .then((response) => {
@@ -124,10 +124,10 @@ Row.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         maximum_student: PropTypes.number.isRequired,
-        departmentId: PropTypes.string.isRequired,
-        instructor: PropTypes.shape({
+        departmentId: PropTypes.number.isRequired,
+        /* instructor: PropTypes.shape({
             id: PropTypes.number.isRequired,
-        })
+        }) */
     }).isRequired,
 };
 
@@ -168,7 +168,10 @@ export default function ClassEnroll() {
                     </TableHead>
                     <TableBody>
                         {userArray.map((row) => (
-                            <Row key={row.id} row={row} />
+                            <Row key={row.id} row={{
+                                ...row,
+                                departmentId: parseInt(row.departmentId, 10)
+                            }} />
                         ))}
                     </TableBody>
                 </Table>

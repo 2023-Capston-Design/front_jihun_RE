@@ -74,6 +74,12 @@ function Row(props) {
         })
     }
 
+    const handleConnect = () => {
+        const temp = row.studentEnv;
+        const replaced_temp = temp.replace('localhost:', `${API.BASE}`);
+        window.open(`${replaced_temp}`);
+    }
+
 
     return (
 
@@ -105,6 +111,15 @@ function Row(props) {
                                     '&:hover': {
                                         backgroundColor: 'rgba(255, 86, 48)', // hover 시 배경 색상 변경
                                     }
+                                }} fullWidth size="large" type="submit" variant="contained" onClick={handleConnect} >
+                                    실습 환경 접속
+                                </LoadingButton>
+                                <LoadingButton sx={{
+                                    backgroundColor: 'rgba(255, 86, 48, 0.7)',
+                                    boxShadow: '0 8px 16px 0 rgba(255, 86, 48, 0.14)',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255, 86, 48)', // hover 시 배경 색상 변경
+                                    }
                                 }} fullWidth size="large" type="submit" variant="contained" onClick={handleDrop} >
                                     수강 취소하기
                                 </LoadingButton>
@@ -122,6 +137,7 @@ function Row(props) {
 Row.propTypes = {
     row: PropTypes.shape({
         id: PropTypes.number.isRequired,
+        studentEnv: PropTypes.string.isRequired,
         classes: PropTypes.shape({
             id: PropTypes.number.isRequired,
             name: PropTypes.string.isRequired,

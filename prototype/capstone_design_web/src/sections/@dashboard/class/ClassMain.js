@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 import { TextField, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -34,7 +35,7 @@ function Row(props) {
         const tempTk = getCookie("access_tk");
         setTk(tempTk);
 
-        axios.get(`${API.MEMREADBYID}/${row.instructor.id}`,{
+        /* axios.get(`${API.MEMREADBYID}/${row.instructor.id}`,{
             headers: {
                 "Authorization": `Bearer ${tempTk}`
             }
@@ -42,16 +43,16 @@ function Row(props) {
             setInstructor(response.data.name);
         }).catch((error)=>{
             console.log(error)
-        });
+        }); */
 
         axios.get(`${API.DIDREAD}/${row.departmentId}`)
-        .then((response)=>{
-            setDepartment(response.data.name);
-        }).catch((error)=>{
-            console.log(error)
-        });
+            .then((response) => {
+                setDepartment(response.data.name);
+            }).catch((error) => {
+                console.log(error)
+            });
 
-    }, [row.instructor.id, row.departmentId]);
+    }, [/* row.instructor.id, */ row.departmentId]);
 
     const handleModify = () => {
         axios.patch(`${API.CLASS}`, {
@@ -66,6 +67,12 @@ function Row(props) {
         }).catch((error) => {
             console.log(error)
         })
+    }
+
+    const handleConnect = () => {
+        const temp = row.instructorEnv;
+        const replaced_temp = temp.replace('localhost:', `${API.BASE}`);
+        window.open(`${replaced_temp}`);
     }
 
 
@@ -86,13 +93,22 @@ function Row(props) {
                 </TableCell>
                 <TableCell >{row.maximum_student}</TableCell>
                 <TableCell >{department}</TableCell>
-                <TableCell >{instructor}</TableCell>
+                {/* <TableCell >{instructor}</TableCell> */}
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
                             <Stack spacing={1}>
+                                <LoadingButton sx={{
+                                    backgroundColor: 'rgba(255, 86, 48, 0.7)',
+                                    boxShadow: '0 8px 16px 0 rgba(255, 86, 48, 0.14)',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255, 86, 48)', // hover 시 배경 색상 변경
+                                    }
+                                }} fullWidth size="large" type="submit" variant="contained" onClick={handleConnect} >
+                                    실습 환경 접속
+                                </LoadingButton>
                                 <TextField
                                     required
                                     name="maximumStudent"
@@ -125,9 +141,7 @@ Row.propTypes = {
         name: PropTypes.string.isRequired,
         maximum_student: PropTypes.number.isRequired,
         departmentId: PropTypes.number.isRequired,
-        instructor: PropTypes.shape({
-            id: PropTypes.number.isRequired,
-        })
+        instructorEnv: PropTypes.string.isRequired,
     }).isRequired,
 };
 
@@ -138,12 +152,9 @@ export default function ClassMain() {
     useEffect(() => {
 
         const tkn = getCookie("access_tk");
+        const decodedTkn = jwtDecode(tkn);
 
-        axios.get(`${API.CLASS}`, {
-            params: {
-                "page": 1,
-                "pagesize": 100,
-            },
+        axios.get(`${API.CLASSINSTRUCTOR}/${decodedTkn.user_id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
@@ -166,7 +177,7 @@ export default function ClassMain() {
                             <TableCell>강의 명</TableCell>
                             <TableCell >최대 인원</TableCell>
                             <TableCell >학과(부서)</TableCell>
-                            <TableCell >담당 교수</TableCell>
+                            {/* <TableCell >담당 교수</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
